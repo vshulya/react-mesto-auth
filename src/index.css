@@ -10,6 +10,7 @@
 @import url(./blocks/logo/logo.css);
 
 @import url(./blocks/button/button.css);
+@import url(./blocks/link/link.css);
 
 @import url(./blocks/container/container.css);
 
@@ -54,6 +55,10 @@
 @import url(./blocks/pop-up/__fullsize-photo/pop-up__fullsize-photo.css);
 @import url(./blocks/pop-up/__figcaption/pop-up__figcaption.css);
 @import url(./blocks/pop-up/__photo-container/pop-up__photo-container.css);
+
+@import url(./blocks/login/login.css);
+@import url(./blocks/register/register.css);
+@import url(./blocks/infotooltip/infotooltip.css);
 
 
 
