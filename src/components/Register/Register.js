@@ -37,7 +37,7 @@ const Register = ({ isOpen, onClose, handleRegister }) => {
       title="Регистрация"
       buttonValue="Зарегистрироваться"
     >
-      <label className="register__field">
+      <label className="auth__field">
         <input
           type="email"
           value={inputs.email || ''}
@@ -47,12 +47,8 @@ const Register = ({ isOpen, onClose, handleRegister }) => {
           name="email"
           className="register__input register__input_type_email"
           required />
-        {/* <span
-          id="email-input-error"
-          className="register__input-error">
-        </span> */}
       </label>
-      <label className="register__field">
+      <label className="auth__field">
         <input
           type="password"
           value={inputs.password || ''}
@@ -64,10 +60,6 @@ const Register = ({ isOpen, onClose, handleRegister }) => {
           minLength="2"
           maxLength="200"
           required />
-        {/* <span
-          id="password-input-error"
-          className="register__input-error">
-        </span> */}
       </label>
     </AuthPopup>
   )
