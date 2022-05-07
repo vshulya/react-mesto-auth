@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, useNavigate, Link } from "react-router-dom";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import Header from "../Header/Header";
@@ -17,41 +17,36 @@ import * as auth from '../../auth';
 import api from '../../utils/Api';
 
 function App() {
-  const [isInfoTooltipSucceed, setIsInfoTooltipSucceed] = React.useState(false);
-  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
-  const [isImagePopupOpen, setIsImagePopupOpen] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState({});
-  const [currentUser, setCurrentUser] = React.useState({});
-  const [cards, setCards] = React.useState([]);
-  const [loggedIn, setLoggedIn] = React.useState(false);
-  const [userEmail, setUserEmail] = React.useState(null);
+  const [isInfoTooltipSucceed, setIsInfoTooltipSucceed] = useState(false);
+  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
+  const [selectedCard, setSelectedCard] = useState({});
+  const [currentUser, setCurrentUser] = useState({});
+  const [cards, setCards] = useState([]);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [userEmail, setUserEmail] = useState(null);
 
   const navigate = useNavigate();
 
-  React.useEffect(() => {
-    Promise.all([api.getInitialCards(), api.getProfile()])
-      .then(([cards, userData]) => {
-        setCurrentUser(userData);
-        setCards(cards);
-      })
-      .catch((err) => console.log(err));
-  }, []);
-
-  React.useEffect(() => {
+  useEffect(() => {
     tokenCheck();
   }, [])
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (loggedIn) {
-      navigate("/");
+      Promise.all([api.getInitialCards(), api.getProfile()])
+        .then(([cards, userData]) => {
+          setCurrentUser(userData);
+          setCards(cards);
+        })
+        .catch((err) => console.log(err));
     }
-  }, [loggedIn])
+  }, [loggedIn]);
 
   // Setting up token operation
-
   const handleRegister = (email, password) => {
     return auth
       .register(email, password)
@@ -88,7 +83,6 @@ function App() {
       })
   };
 
-
   const tokenCheck = () => {
     if (localStorage.getItem('jwt')) {
       let jwt = localStorage.getItem('jwt');
@@ -96,9 +90,7 @@ function App() {
         .getContent(jwt)
         .then((res) => {
           if (res) {
-
             switchToLoggedIn(res.data.email);
-
           }
         })
     }
